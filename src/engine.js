@@ -8,7 +8,8 @@ import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment
 import { disposeScene, damp } from './lib.js';
 
 // Tek renderer, tek canvas: sayfalar arasında yalnız sahne değişir.
-export function createEngine(canvas) {
+// WebGL yoksa WebGLRenderer hata fırlatır; main.js bunu yakalayıp 3D'siz moda geçer.
+export function createEngine(canvas, { reducedMotion = false } = {}) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -49,7 +50,11 @@ export function createEngine(canvas) {
     mouseS: new THREE.Vector2(),
     mobile: innerWidth < 820,
     velocity: 0,
+    reducedMotion,
   };
+  // "hareketi azalt": film greni titremesi ve RGB vuruşu kapalı, ortam hareketi yavaş
+  if (reducedMotion) finish.uniforms.grain.value = 0;
+  const timeScale = reducedMotion ? 0.2 : 1;
   let current = null;
   let fade = 1; // sahne geçişinde siyahtan açılma
 
@@ -62,6 +67,10 @@ export function createEngine(canvas) {
     bloom.resolution.set(w, h);
     if (current) {
       current.camera.aspect = w / h;
+      // mobilde metin ekranın alt yarısında durur: 3D görüntüyü yukarı kaydır ki nesneler metnin altına düşmesin
+      const shift = state.mobile ? current.mobileShift ?? 0.12 : 0;
+      if (shift) current.camera.setViewOffset(w, h, 0, h * shift, w, h);
+      else current.camera.clearViewOffset();
       current.camera.updateProjectionMatrix();
       current.resize?.(w, h, state);
     }
@@ -101,7 +110,7 @@ export function createEngine(canvas) {
     requestAnimationFrame(loop);
     if (!running || !current) return;
     const dt = Math.min(clock.getDelta(), 0.05);
-    const t = clock.elapsedTime;
+    const t = clock.elapsedTime * timeScale;
     state.p = damp(state.p, state.target.p, 6, dt);
     state.sp = damp(state.sp, state.target.sp, 6, dt);
     state.mouseS.x = damp(state.mouseS.x, state.mouse.x, 3, dt);
@@ -110,7 +119,7 @@ export function createEngine(canvas) {
     renderer.toneMappingExposure = (current.exposure ?? 1.05) * fade;
     finish.uniforms.time.value = t % 100;
     // RGB kayması artık scroll hızına bağlı sürekli bir efekt değil — yalnızca bölüm geçişinde ~0.3sn'lik bir vuruş
-    state.pulse = (state.pulse ?? 0) * Math.exp(-dt * 11);
+    state.pulse = reducedMotion ? 0 : (state.pulse ?? 0) * Math.exp(-dt * 11);
     finish.uniforms.amount.value = state.pulse;
     current.update(t, dt, state);
     state.velocity *= Math.exp(-dt * 6);
