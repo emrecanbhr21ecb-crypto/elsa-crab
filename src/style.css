@@ -192,6 +192,21 @@ body.scrolled .scroll-cue { opacity: 0; }
 .f-mail { display: inline-block; margin-top: 6px; font-weight: 600; font-size: 15px; color: var(--accent); text-decoration: none; }
 .f-mail:hover { text-decoration: underline; }
 
+/* kurucu kartından yolculuğa geçiş */
+.f-teaser { font: 400 22px/1.3 var(--serif) !important; color: var(--fg) !important; margin: 22px 0 0 !important; }
+.f-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 4px; }
+.f-links .btn { margin-top: 16px; }
+.f-links .f-mail { margin-top: 16px; }
+
+/* yolculuk */
+.j-hero .display { font-size: clamp(52px, 8.4vw, 136px); }
+.j-ch .panel { max-width: 540px; }
+.j-ch .panel h2 { font-size: clamp(30px, 3vw, 44px); }
+.panel .body + .body { margin-top: 12px; }
+.j-ch .panel .body { font-size: 16px; line-height: 1.6; }
+.j-end .display { max-width: 1100px; font-size: clamp(36px, 5.2vw, 84px); line-height: 1.02; }
+.j-end .btn { margin-top: 48px; }
+
 /* istatistik */
 .stats { align-items: center; }
 .stats .kicker { align-self: center; }
@@ -343,6 +358,12 @@ body.loaded #curtain:not(.on) .loader { display: none; }
   .chapter.right .sticky { justify-content: stretch; }
   .panel { max-width: none; width: 100%; padding: 24px 20px; background: rgba(8, 10, 18, 0.66); }
   body[data-tone='light'] .panel { background: rgba(250, 250, 248, 0.82); }
+  /* yolculuk panelleri uzun: mobilde yapışkan değil, akışta — metin ekrandan taşmasın */
+  .j-ch { min-height: 0; }
+  .j-ch .sticky { position: relative; height: auto; min-height: 100vh; padding: 46vh 0 40px; align-items: flex-start; }
+  .j-ch .panel { opacity: 1; transform: none; }
+  .j-ch .panel .body { font-size: 15.5px; }
+  .f-teaser { font-size: 19px !important; }
   .about-cols, .steps { grid-template-columns: 1fr; }
   .steps::before { display: none; }
   .step { padding: 0 0 28px 30px; }

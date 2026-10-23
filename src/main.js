@@ -1,7 +1,7 @@
 import './style.css';
 import Lenis from 'lenis';
 import { createEngine } from './engine.js';
-import { ui, home, products, websites, studio } from './content.js';
+import { ui, home, products, websites, studio, journey } from './content.js';
 import { preload } from './lib.js';
 import { initSound, isSoundEnabled, setSoundEnabled, playClick } from './audio.js';
 
@@ -17,6 +17,7 @@ const scenes = {
   ehrenweg: () => import('./scenes/ehrenweg.js'),
   greenact: () => import('./scenes/greenact.js'),
   web: () => import('./scenes/web.js'),
+  journey: () => import('./scenes/journey.js'),
 };
 
 // ---------- dil ----------
@@ -110,7 +111,8 @@ function homeHTML() {
           <h3>${esc(studio.founder)}</h3>
           <p class="f-role">${T(a.founder.role)}</p>
           ${a.founder.p.map((p) => `<p>${T(p)}</p>`).join('')}
-          <a class="f-mail" href="mailto:${studio.email}">${studio.email} →</a>
+          <p class="f-teaser">${T(journey.teaser)}</p>
+          <div class="f-links"><a class="btn ghost magnetic" href="#/${journey.slug}">${T(journey.teaser_link)} →</a><a class="f-mail" href="mailto:${studio.email}">${studio.email}</a></div>
         </div>
       </article>
       <div class="values">
@@ -311,9 +313,44 @@ function productHTML(p) {
   </section>`;
 }
 
+function journeyHTML() {
+  const J = journey;
+  return `
+  <section class="sec hero p-hero j-hero" data-sec data-label="${esc(T(J.nav))}">
+    <div class="p-hero-in">
+      <p class="eyebrow">${T(J.eyebrow)}</p>
+      <h1 class="display">${split(T(J.title))}</h1>
+      <p class="lead">${T(J.lead)}</p>
+    </div>
+    <div class="scroll-cue"><span></span>${T(ui.scroll)}</div>
+  </section>
+  ${marquee(J.marquee)}
+  ${J.chapters
+    .map(
+      (c, i) => `
+  <section class="sec chapter j-ch ${i % 2 ? 'right' : 'left'}" data-sec data-label="${esc(T(c.label))}">
+    <div class="sticky">
+      <div class="panel">
+        <p class="kicker">${pad(i + 1)} <i>//</i> ${esc(T(c.label))}</p>
+        <h2>${split(T(c.h), 'split words')}</h2>
+        ${c.p.map((x) => `<p class="body">${T(x)}</p>`).join('')}
+        ${c.points ? `<div class="points">${c.points.map(([v, l]) => `<div><b>${esc(T(v))}</b><span>${esc(T(l))}</span></div>`).join('')}</div>` : ''}
+      </div>
+    </div>
+  </section>`,
+    )
+    .join('')}
+  <section class="sec contact center j-end" data-sec data-label="${esc(T({ en: 'Orbit', tr: 'Yörünge' }))}">
+    <h2 class="display sm">${split(T(J.end), 'split words')}</h2>
+    <a class="btn magnetic reveal" href="mailto:${studio.email}">${studio.email}</a>
+    <a class="back" href="#/">← ${T(ui.back)}</a>
+  </section>`;
+}
+
 function navHTML(active) {
   document.getElementById('nav-list').innerHTML =
     `<a href="#/" class="${active === 'home' ? 'on' : ''}">${T(ui.nav_home)}</a>` +
+    `<a href="#/${journey.slug}" class="${active === journey.slug ? 'on' : ''}" style="--ac:${journey.accent}">${T(journey.nav)}</a>` +
     products.map((p) => `<a href="#/${p.slug}" class="${active === p.slug ? 'on' : ''}" style="--ac:${p.accent}">${esc(pname(p))}</a>`).join('') +
     `<span class="nav-sep">${T(ui.nav_web)}</span>` +
     websites.map((w) => `<a href="#/web/${w.slug}" class="${active === 'web/' + w.slug ? 'on' : ''}" style="--ac:${w.accent}">${esc(w.name)}</a>`).join('');
@@ -323,7 +360,7 @@ function navHTML(active) {
 function hudHTML(p) {
   hud.innerHTML = `
     <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-    <div class="rail">${p ? `${p.code} · ${esc(pname(p))}` : `ELSA · ${T(home.eyebrow)}`}</div>
+    <div class="rail">${p ? `${p.code} · ${esc(pname(p))}` : document.body.dataset.kind === 'journey' ? `${journey.code} · ${esc(studio.founder)}` : `ELSA · ${T(home.eyebrow)}`}</div>
     <div class="readout" id="readout"></div>
     <div class="counter"><span id="c-num">01</span><span class="c-of">/ <span id="c-tot">01</span></span><span id="c-lab"></span><span class="c-bar"><i id="c-prog"></i></span></div>`;
 }
@@ -391,6 +428,12 @@ addEventListener('resize', () => {
   measure();
   onScroll();
 });
+// fontlar geç yüklenip metin yeniden dizilince bölüm konumları değişir — eski ölçümle sahne
+// kaydırmanın gerisinde kalıyordu; sayfa yüksekliği her değiştiğinde yeniden ölç
+new ResizeObserver(() => {
+  measure();
+  onScroll();
+}).observe(pageEl);
 
 // ---------- görünür olunca açığa çıkar + sayaç ----------
 const io = new IntersectionObserver(
@@ -435,6 +478,7 @@ let currentLang = lang;
 let firstLoad = true;
 function resolve() {
   const slug = location.hash.replace(/^#\/?/, '').split('?')[0];
+  if (slug === journey.slug) return { key: journey.slug, scene: 'journey', page: null, isJourney: true };
   if (slug.startsWith('web/')) {
     const w = websites.find((x) => x.slug === slug.slice(4));
     if (w) return { key: 'web/' + w.slug, scene: 'web', page: w };
@@ -445,7 +489,7 @@ function resolve() {
 }
 
 async function route(force = false) {
-  const { key, scene, page: p } = resolve();
+  const { key, scene, page: p, isJourney } = resolve();
   if (key === currentKey && lang === currentLang && !force) return;
   const my = ++routeId;
   const sameScene = key === currentKey;
@@ -458,17 +502,17 @@ async function route(force = false) {
   const mod = sceneStale && engine.renderer ? await scenes[scene]().catch((err) => (console.error(err), null)) : null;
   if (my !== routeId) return;
 
-  const accent = p ? p.accent : '#9aa7ff';
+  const accent = p ? p.accent : isJourney ? journey.accent : '#9aa7ff';
   document.documentElement.style.setProperty('--accent', accent);
-  document.documentElement.style.setProperty('--bg', p ? p.bg : '#05060c');
-  document.title = p ? `${pname(p)} — ${studio.name}` : `${studio.name} — ${T(home.eyebrow)}`;
+  document.documentElement.style.setProperty('--bg', p ? p.bg : isJourney ? journey.bg : '#05060c');
+  document.title = p ? `${pname(p)} — ${studio.name}` : isJourney ? `${T(journey.nav)} · ${studio.founder} — ${studio.name}` : `${studio.name} — ${T(home.eyebrow)}`;
   // sayfaya özel açıklama: JS çalıştıran tarayıcı/arama motorları her ürünü kendi metniyle görsün
-  document.querySelector('meta[name="description"]')?.setAttribute('content', p ? T(p.tagline) : T(home.lead));
+  document.querySelector('meta[name="description"]')?.setAttribute('content', p ? T(p.tagline) : isJourney ? T(journey.lead) : T(home.lead));
   document.documentElement.lang = lang;
   document.body.dataset.page = key;
-  document.body.dataset.kind = p ? p.kind : 'home';
+  document.body.dataset.kind = p ? p.kind : isJourney ? 'journey' : 'home';
   document.body.dataset.tone = p?.tone || 'dark';
-  pageEl.innerHTML = p ? productHTML(p) : homeHTML();
+  pageEl.innerHTML = p ? productHTML(p) : isJourney ? journeyHTML() : homeHTML();
   navHTML(key);
   hudHTML(p);
   lastSec = -1;
@@ -480,11 +524,11 @@ async function route(force = false) {
   bindTilt();
 
   if (sceneStale) {
-    const assets = p ? [...(p.shots ?? []), p.icon] : products.map((x) => x.icon);
+    const assets = p ? [...(p.shots ?? []), p.icon] : isJourney ? [] : products.map((x) => x.icon);
     await Promise.race([preload(assets, firstLoad ? setLoad : null), new Promise((r) => setTimeout(r, firstLoad ? 6000 : 2500))]);
     if (mod) {
       try {
-        const built = mod.build({ renderer: engine.renderer, product: p, products, websites, state: engine.state, lang, navigate: (s) => (location.hash = `#/${s}`) });
+        const built = mod.build({ renderer: engine.renderer, product: p, products, websites, journey, state: engine.state, lang, navigate: (s) => (location.hash = `#/${s}`) });
         engine.setScene(built);
       } catch (err) {
         // sahne kurulamazsa sayfa yine de açılsın

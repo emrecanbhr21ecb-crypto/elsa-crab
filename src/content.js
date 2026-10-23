@@ -976,3 +976,178 @@ export const websites = [
 ];
 
 export const allPages = [...products, ...websites];
+
+// Kurucunun yolculuğu (#/yolculuk). Bölümler sırayla roket sahnesini sürer:
+// 1 = 2017 ilk fırlatma, 8 = 2024 ikinci deneme, 10 = hedef (yörünge).
+export const journey = {
+  slug: 'yolculuk',
+  code: 'EL-00',
+  accent: '#ff8a3d',
+  bg: '#04050d',
+  nav: { en: 'Journey', tr: 'Yolculuk' },
+  eyebrow: { en: 'Founder · Emre Can Buhur', tr: 'Kurucu · Emre Can Buhur' },
+  title: { en: 'It didn’t start\nwith software.', tr: 'Hikâye yazılımla\nbaşlamadı.' },
+  lead: {
+    en: 'Behind Elsa is Emre Can Buhur. This is the road that came before the games and apps: two failed rockets, communities that reached millions, an AI venture that closed — and the same question all along.',
+    tr: 'Elsa\'nın arkasında Emre Can Buhur var. Bu sayfa, oyunlardan ve uygulamalardan önce gelen yolu anlatıyor: iki başarısız roket, milyonlara ulaşan topluluklar, kapanan bir yapay zekâ girişimi — ve hep aynı soru.',
+  },
+  teaser: {
+    en: 'But the story didn’t start with software. August 2017 — the first rocket.',
+    tr: 'Ama hikâye yazılımla başlamadı. Ağustos 2017 — ilk roket.',
+  },
+  teaser_link: { en: 'The whole journey', tr: 'Yolculuğun tamamı' },
+  marquee: { en: '2016 · 2017 · 2023 · 2024 · Elsa · Orbit ·', tr: '2016 · 2017 · 2023 · 2024 · Elsa · Yörünge ·' },
+  chapters: [
+    {
+      label: { en: 'August 2017', tr: 'Ağustos 2017' },
+      h: { en: 'The first rocket', tr: 'İlk roket' },
+      p: [
+        {
+          en: 'Before any of today’s projects existed, one of the things that pulled Emre in was rockets. Instead of only reading about them or watching them, he tried to build and launch his own.',
+          tr: 'Henüz bugünkü projelerin hiçbiri yokken Emre\'nin ilgisini çeken şeylerden biri roketlerdi. Onları yalnızca okumak ya da izlemek yerine kendi roketini üretmeye ve fırlatmaya çalıştı.',
+        },
+        {
+          en: 'The first attempt failed. There was no big lab, no professional team, no flawless system — just an idea, the will to make it real, and a test launch that ended in failure.',
+          tr: 'İlk deneme başarılı olmadı. Ortada büyük bir laboratuvar, profesyonel bir ekip ya da kusursuz çalışan bir sistem yoktu; bir fikir, onu gerçeğe dönüştürme isteği ve başarısızlıkla biten bir deneme atışı vardı.',
+        },
+        { en: 'But what failed that day was only a rocket — not the idea.', tr: 'Fakat o gün başarısız olan yalnızca bir roketti; fikir değil.' },
+      ],
+    },
+    {
+      label: { en: '2016 – 2020', tr: '2016 – 2020' },
+      h: { en: 'Communities that reached millions', tr: 'Milyonlara ulaşan topluluklar' },
+      p: [
+        {
+          en: 'The digital journey began in 2016, as social media in Türkiye was growing fast. He led social media development and digital services so that women’s rights could reach wider audiences online, aid associations could grow, and social-good communities could be seen.',
+          tr: 'Dijital dünyadaki yolculuk 2016\'da, Türkiye\'de sosyal medyanın hızla büyüdüğü bir dönemde başladı. Kadın haklarının dijitalde daha geniş kitlelere ulaşması, sosyal yardım derneklerinin büyümesi ve sosyal fayda odaklı toplulukların görünür olması için öncü sosyal medya geliştirme çalışmaları ve dijital hizmetler sundu.',
+        },
+        {
+          en: 'He co-founded several social media outlets that reached millions of followers, and was among the founders of one of Türkiye’s first automation systems bringing social media services onto a single digital infrastructure — his first products at the crossing of software, automation and growth.',
+          tr: 'Milyonlarca takipçiye ulaşan birden fazla sosyal medya oluşumunun kuruluşunda yer aldı. Sosyal medya servislerini tek bir dijital altyapıda toplayan, Türkiye\'deki ilk otomasyon sistemlerinden birinin kurucuları arasındaydı — yazılım, otomasyon ve dijital büyümenin kesiştiği yerde ürün geliştirdiği ilk dönem.',
+        },
+      ],
+      points: [['2016', { en: 'first step online', tr: 'dijitalde ilk adım' }], ['1M+', { en: 'followers reached', tr: 'ulaşılan takipçi' }]],
+    },
+    {
+      label: { en: '2023 – 2026', tr: '2023 – 2026' },
+      h: { en: 'From reach to impact', tr: 'Dijital deneyim, sosyal etkiye döndü' },
+      p: [
+        {
+          en: 'Over time the goal stopped being big audiences and became using that know-how for the public good.',
+          tr: 'Zamanla hedef yalnızca büyük kitleler oluşturmak değil, bu altyapı bilgisini toplumsal fayda için kullanmak hâline geldi.',
+        },
+        {
+          en: 'From June 2023 to June 2026 he provided social media and software support to spread science literacy, raise AI awareness, make women’s and human rights work more visible and grow the digital capacity of civil society — so organisations could not just be seen, but actually use digital tools for their own goals.',
+          tr: 'Haziran 2023\'ten Haziran 2026\'ya kadar bilim okuryazarlığının yaygınlaşması, yapay zekâ farkındalığının artması, kadın hakları ve insan hakları çalışmalarının görünürlüğü ve sivil toplum kuruluşlarının dijital kapasitesi için sosyal medya ve yazılım desteği sundu. Amaç yalnızca görünürlük değil; sivil oluşumların dijital araçları kendi amaçları için gerçekten kullanabilmesiydi.',
+        },
+      ],
+      points: [['3', { en: 'years with civil society', tr: 'yıl sivil toplumla' }], ['4', { en: 'focus areas', tr: 'odak alanı' }]],
+    },
+    {
+      label: { en: 'Yıldız Yapay Zekâ', tr: 'Yıldız Yapay Zekâ' },
+      h: { en: 'Generative AI, free for everyone', tr: 'Herkese ücretsiz üretken yapay zekâ' },
+      p: [
+        {
+          en: 'Then came AI. Emre took part in founding Yıldız Yapay Zekâ and went on to release one of Türkiye’s first free AI image-generation engines — so anyone could try generative AI without paying, back when access was scarce.',
+          tr: 'Sonra yapay zekâ geldi. Emre, Yıldız Yapay Zekâ\'nın kuruluşunda yer aldı; devamında Türkiye\'nin ilk ücretsiz yapay zekâ tabanlı görsel oluşturma motorlarından birini yayımladı. Amaç, erişimin çok sınırlı olduğu bir dönemde herkesin üretken yapay zekâyı ücret ödemeden deneyebilmesiydi.',
+        },
+        {
+          en: 'When Gemini and ChatGPT began offering the same directly, the market changed overnight and rising model and server costs made a free, independent service unsustainable. It closed — with a lesson: building the right product early isn’t always enough.',
+          tr: 'Gemini ve ChatGPT benzer yetenekleri doğrudan sunmaya başlayınca pazar kısa sürede değişti; artan model ve sunucu maliyetleri bağımsız ve ücretsiz bir hizmeti sürdürülemez kıldı. Proje kapandı — geride bir ders bırakarak: doğru ürünü erken geliştirmek her zaman yeterli değildir.',
+        },
+      ],
+      points: [['0 ₺', { en: 'cost to users', tr: 'kullanıcıya maliyet' }], [{ en: 'one of the first', tr: 'ilklerden biri' }, { en: 'free image engine', tr: 'ücretsiz görsel motoru' }]],
+    },
+    {
+      label: { en: 'Health · Industry 4.0 · EU', tr: 'Sağlık · Endüstri 4.0 · AB' },
+      h: { en: 'Value lies in the problem solved', tr: 'Değer, çözülen sorunda' },
+      p: [
+        {
+          en: 'At a hospital he worked on a new reading system contributing to medical imaging, free of charge — and published it openly so others could use and improve it.',
+          tr: 'Bir hastanede tıbbi görüntüleme teknolojilerinin gelişimine ücretsiz katkı sağlayan yeni bir okuma sistemi üzerinde çalıştı; onu kapalı tutmak yerine herkesin kullanıp geliştirebilmesi için açık olarak yayımladı.',
+        },
+        {
+          en: 'He worked on Industry 4.0 digital transformation and automation, and helped design and run EU projects bringing together youth, education, volunteering, technology and social impact. First place in three hackathons abroad, against international teams, tested his ideas far beyond home.',
+          tr: 'Endüstri 4.0 kapsamında dijital dönüşüm ve otomasyon üzerine çalıştı; Avrupa Birliği projelerinde gençlik, eğitim, gönüllülük, teknoloji ve sosyal etkiyi bir araya getiren çalışmaların geliştirilmesinde ve uygulanmasında yer aldı. Uluslararası ekiplerle yarıştığı yurt dışı merkezli üç hackathonda aldığı birincilikler, fikirlerini uluslararası rekabette sınadığı dönüm noktaları oldu.',
+        },
+      ],
+      points: [['3', { en: 'hackathon wins abroad', tr: 'yurt dışı hackathon birinciliği' }], [{ en: 'open', tr: 'açık' }, { en: 'medical imaging system', tr: 'tıbbi görüntüleme sistemi' }]],
+    },
+    {
+      label: { en: 'Aether AI', tr: 'Aether AI' },
+      h: { en: 'Not every project ended well', tr: 'Her proje başarıyla bitmedi' },
+      p: [
+        {
+          en: 'Aether AI was founded, built — and in the end, it failed. That isn’t a line cut from this story.',
+          tr: 'Yapay zekâ alanında Aether AI kuruldu, geliştirildi — ve sonunda başarısız oldu. Bu, hikâyeden çıkarılan bir satır değil.',
+        },
+        {
+          en: 'It showed that a tech venture is more than good code or a strong idea: product–market fit, distribution, sustainability, timing and building what people truly need matter as much as the technology.',
+          tr: 'Çünkü bir teknoloji girişiminin yalnızca iyi koddan ya da güçlü bir fikirden oluşmadığını gösterdi: ürün-pazar uyumu, dağıtım, sürdürülebilirlik, zamanlama ve insanların gerçekten ihtiyaç duyduğu şeyi üretmek en az teknoloji kadar önemli.',
+        },
+      ],
+    },
+    {
+      label: { en: 'Starting again', tr: 'Yeniden başlamak' },
+      h: { en: 'The fields changed. The curiosity didn’t.', tr: 'Alanlar değişti. Merak değişmedi.' },
+      p: [
+        {
+          en: 'AI, mobile apps, digital publishing, game development and social entrepreneurship became parts of one way of making. He wrote scientific papers, ran European solidarity projects and designed systems that make young people’s volunteering visible.',
+          tr: 'Yapay zekâ, mobil uygulamalar, dijital yayıncılık, oyun geliştirme ve sosyal girişimcilik aynı üretim biçiminin parçalarına dönüştü. Bilimsel çalışmalar yazdı, Avrupa dayanışma projeleri geliştirip yürüttü, gençlerin gönüllülüğünü görünür kılan sistemler tasarladı.',
+        },
+        {
+          en: 'While digitising the youth and volunteering ecosystem at Bazalt, he was designing an app’s architecture at one desk, a game’s economy at another, a physical product’s brand at a third. Always the same question: “Can I turn this into something that actually works?”',
+          tr: 'Bazalt\'ta gençlik ve gönüllülük ekosistemini dijitalleştirirken bir masada bir mobil uygulamanın mimarisini, diğerinde bir oyunun ekonomisini, bir başkasında fiziksel bir ürünün markasını tasarladı. Hep aynı soru: “Bunu gerçekten çalışan bir şeye dönüştürebilir miyim?”',
+        },
+      ],
+    },
+    {
+      label: { en: '2024', tr: '2024' },
+      h: { en: 'The second attempt', tr: 'İkinci deneme' },
+      p: [
+        {
+          en: 'The idea left unfinished in 2017 came back to the table. Emre tried once more to build and fly his own rocket.',
+          tr: '2017\'de yarım kalan fikir yeniden masaya geldi. Emre bir kez daha kendi roketini geliştirmeyi ve uçurmayı denedi.',
+        },
+        {
+          en: 'The second attempt failed too. Two eras, two attempts, the same result — and the same goal, not given up.',
+          tr: 'İkinci deneme de başarısız oldu. İki farklı dönem, iki farklı deneme, aynı sonuç — ama vazgeçilmeyen aynı hedef.',
+        },
+      ],
+      points: [['2017', { en: 'first attempt', tr: 'ilk deneme' }], ['2024', { en: 'second attempt', tr: 'ikinci deneme' }]],
+    },
+    {
+      label: { en: 'Today', tr: 'Bugün' },
+      h: { en: 'Elsa', tr: 'Elsa' },
+      p: [
+        {
+          en: 'Elsa continues that line. For Emre, building a product isn’t just writing code: finding the problem, designing the system, shaping the interface, understanding the user, failing, rebuilding — and finally turning the idea into something people can use.',
+          tr: 'Bugün Elsa da bu çizginin devamı. Emre için ürün geliştirmek yalnızca kod yazmak değil: problemi bulmak, sistemi tasarlamak, arayüzü kurmak, kullanıcıyı anlamak, başarısız olmak, yeniden kurmak ve sonunda fikri insanların kullanabileceği gerçek bir ürüne dönüştürmek.',
+        },
+        {
+          en: 'Rockets, communities, closed ventures and today’s products aren’t separate stories. They are eras of one reflex: wondering how something works — then trying to build it yourself.',
+          tr: 'Roketler, topluluklar, kapanan girişimler ve bugünün ürünleri ayrı hikâyeler değil. Hepsi aynı refleksin farklı dönemleri: bir şeyin nasıl çalıştığını merak etmek — sonra onu kendin yapmaya çalışmak.',
+        },
+      ],
+      points: [['9', { en: 'games & apps', tr: 'oyun ve uygulama' }], ['3', { en: 'websites', tr: 'web sitesi' }]],
+    },
+    {
+      label: { en: 'The long-term goal', tr: 'Uzun vadeli hedef' },
+      h: { en: 'A space venture born in Türkiye', tr: 'Türkiye\'den doğan bir uzay girişimi' },
+      p: [
+        {
+          en: 'The journey that began in 2017 and was tried again in 2024 has become a longer goal: to found a private rocket and space technology company born in Türkiye.',
+          tr: '2017\'de başlayan ve 2024\'te yeniden denenen yolculuk bugün daha uzun vadeli bir hedefe dönüştü: Türkiye\'den doğan özel bir roket ve uzay teknolojileri girişimi kurmak.',
+        },
+        {
+          en: 'Engineering, software and AI under one system — and one day, technology he built himself, carried into the sky for real.',
+          tr: 'Mühendislik, yazılım ve yapay zekâyı aynı sistem altında birleştirmek — ve bir gün kendi geliştirdiği teknolojileri gerçekten gökyüzüne taşımak.',
+        },
+      ],
+    },
+  ],
+  end: {
+    en: 'Some failed launches aren’t the moment a story hits the ground — they’re the moment its orbit begins.',
+    tr: 'Bazı başarısız fırlatmalar, bir hikâyenin yere düştüğü an değil; yörüngesinin başladığı andır.',
+  },
+};
