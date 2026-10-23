@@ -30,7 +30,8 @@ GitHub Pages. Yönlendirme `#/` ile yapıldığı için ek ayar gerekmez.
 
 ## Nerede ne var
 - `src/content.js` — TÜM metinler (TR/EN), ürünler, web siteleri, rakamlar
-- `src/scenes/` — her sayfanın 3D sahnesi (home, mesh, sand, sores, alchemy, salah, bazalt, fitkoc, web)
+- `src/scenes/` — her sayfanın 3D sahnesi (home, mesh, sand, sores, alchemy, salah, bazalt, fitkoc, ehrenweg, greenact, web, journey)
+- `#/yolculuk` — kurucunun hikâyesi; metinler `src/content.js` → `journey`, roket sahnesi `src/scenes/journey.js`
 - `src/main.js` — sayfa şablonları, yönlendirme, HUD, kaydırma
 - `src/style.css` — tasarım
 - `public/media`, `public/video` — görseller ve videolar
