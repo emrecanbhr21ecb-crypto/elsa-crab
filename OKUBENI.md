@@ -19,6 +19,11 @@ npm run build    # dist/ klasörünü yeniden üretir
 ```
 
 ## Yayına alma
+**GitHub Pages (otomatik):** `main`'e her push'ta `.github/workflows/deploy-pages.yml` siteyi
+derleyip yayınlar. İlk seferde bir kez: repo → Settings → Pages → Source: **GitHub Actions**.
+(Private repoda Pages için GitHub Pro gerekir; değilse repo public olmalı.)
+
+Elle:
 `npm run build` sonrası `dist/` klasörünün içeriğini herhangi bir statik
 barındırmaya yükle: Netlify (klasörü sürükle-bırak), Vercel, Firebase Hosting,
 GitHub Pages. Yönlendirme `#/` ile yapıldığı için ek ayar gerekmez.
