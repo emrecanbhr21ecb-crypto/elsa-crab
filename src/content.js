@@ -3,7 +3,9 @@
 
 export const studio = {
   name: 'Elsa',
-  email: 'hello@elsa.studio', // TODO: gerçek adresle değiştir
+  email: 'emre@elsacrob.com',
+  founder: 'Emre Can Buhur',
+  site: 'https://elsacrob.com/',
 };
 
 export const ui = {
@@ -50,14 +52,33 @@ export const home = {
     h: { en: 'Small team.\nWhole products.', tr: 'Küçük ekip.\nBütün ürünler.' },
     p: [
       {
-        en: 'We are a product studio based in Diyarbakır, Türkiye. We design, build, test and ship our own games and apps, and we build websites for local businesses that want to stand out.',
-        tr: 'Diyarbakır merkezli bir ürün stüdyosuyuz. Kendi oyunlarımızı ve uygulamalarımızı tasarlıyor, geliştiriyor, test ediyor ve yayınlıyoruz; öne çıkmak isteyen yerel işletmeler için de web siteleri kuruyoruz.',
+        en: 'We are an independent product studio. We design, build, test and ship our own games and apps, and we build websites for local businesses that want to stand out.',
+        tr: 'Bağımsız bir ürün stüdyosuyuz. Kendi oyunlarımızı ve uygulamalarımızı tasarlıyor, geliştiriyor, test ediyor ve yayınlıyoruz; öne çıkmak isteyen yerel işletmeler için de web siteleri kuruyoruz.',
       },
       {
         en: 'We write the code ourselves. Every repository carries its own spec and business rules alongside it; coding agents read, analyse and review that code, and suggest fixes and improvements — the final call, and the final line, are always ours. That discipline is how a small team keeps ten products moving without losing quality.',
         tr: 'Kodu biz yazarız. Her repo kendi spesifikasyonunu ve iş kurallarını da yanında taşır; kodlama ajanları bu kodu okur, analiz eder, gözden geçirir ve iyileştirme önerir — son kararı da son satırı da hep biz veririz. Küçük bir ekibin on ürünü kaliteden ödün vermeden yürütmesinin yolu bu disiplin.',
       },
     ],
+    // kurucu: yalnız projelerden görünen bilgi — kişisel ayrıntı eklenecekse buraya
+    founder: {
+      label: { en: 'Founder', tr: 'Kurucu' },
+      role: { en: 'Founder & product developer', tr: 'Kurucu ve ürün geliştirici' },
+      p: [
+        {
+          en: 'Behind Elsa is Emre Can Buhur — a developer who carries a product himself from the first idea to the store: game design, mobile architecture, 3D on the web and the release process all sit on the same desk.',
+          tr: 'Elsa\'nın arkasında Emre Can Buhur var — bir ürünü ilk fikirden mağazaya kadar kendisi taşıyan bir geliştirici: oyun tasarımı, mobil mimari, web\'de 3D ve yayın süreci aynı masada.',
+        },
+        {
+          en: 'What ties his work together is pointing technology at problems that touch everyday life: a mesh network that keeps messages moving when cell towers fail in an earthquake, a passport that makes young people\'s volunteering visible, a path into society through volunteering for newcomers in Germany, a record for every sapling planted after a wildfire. Next to them sit the games — a puzzle that simulates every grain of sand, a shop where you solve orders by mixing colours, a toy-factory empire.',
+          tr: 'İşlerini birbirine bağlayan şey, teknolojiyi gündelik hayata dokunan sorunlara yöneltmek: depremde baz istasyonları çöktüğünde mesajları taşımaya devam eden bir mesh ağı, gençlerin gönüllülüğünü görünür kılan bir pasaport, Almanya\'daki göçmenler için gönüllülükle topluma açılan bir yol, yangından sonra dikilen her fidan için bir kayıt. Yanlarında da oyunlar — her kum tanesini simüle eden bir bulmaca, siparişleri renk karıştırarak çözdüğün bir dükkân, bir oyuncak fabrikası imparatorluğu.',
+        },
+        {
+          en: 'His way of working is simple: spec and business rules first, then small, tested steps. Privacy, offline support and language that never blames the user aren\'t features added later — they are where every project starts.',
+          tr: 'Çalışma biçimi sade: önce spesifikasyon ve iş kuralları, sonra küçük ve test edilmiş adımlar. Gizlilik, çevrimdışı çalışma ve kullanıcıyı suçlamayan bir dil sonradan eklenen özellikler değil — her projenin başladığı yer.',
+        },
+      ],
+    },
     values: [
       { h: { en: 'Privacy by default', tr: 'Varsayılan gizlilik' }, p: { en: 'Location that never leaves the phone. Health data encrypted at rest. Logs with PII masked.', tr: 'Telefondan çıkmayan konum. Şifreli sağlık verisi. Kişisel bilgisi maskelenmiş kayıtlar.' } },
       { h: { en: 'Offline first', tr: 'Önce çevrimdışı' }, p: { en: 'Attendance queues, prayer times, mesh packets — everything keeps working without a signal.', tr: 'Yoklama kuyruğu, namaz vakitleri, mesh paketleri — sinyal yokken de her şey çalışır.' } },

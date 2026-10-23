@@ -19,6 +19,11 @@ npm run build    # dist/ klasörünü yeniden üretir
 ```
 
 ## Yayına alma
+**GitHub Pages (otomatik):** `main`'e her push'ta `.github/workflows/deploy-pages.yml` siteyi
+derleyip yayınlar. İlk seferde bir kez: repo → Settings → Pages → Source: **GitHub Actions**.
+(Private repoda Pages için GitHub Pro gerekir; değilse repo public olmalı.)
+
+Elle:
 `npm run build` sonrası `dist/` klasörünün içeriğini herhangi bir statik
 barındırmaya yükle: Netlify (klasörü sürükle-bırak), Vercel, Firebase Hosting,
 GitHub Pages. Yönlendirme `#/` ile yapıldığı için ek ayar gerekmez.
@@ -31,5 +36,14 @@ GitHub Pages. Yönlendirme `#/` ile yapıldığı için ek ayar gerekmez.
 - `public/media`, `public/video` — görseller ve videolar
 
 ## Yayından önce kontrol et
-- `src/content.js` → `email: 'hello@elsa.studio'` yer tutucu; gerçek adresi yaz.
-- Hakkımızda bölümündeki "Diyarbakır merkezli" ifadesini doğrula.
+- Alan adı `https://elsacrob.com/` varsayıldı: `index.html` (canonical, og:url, og:image,
+  JSON-LD), `public/robots.txt`, `public/sitemap.xml` ve `src/content.js` → `studio.site`.
+  Site başka bir adreste yayınlanacaksa bu yerleri değiştir.
+- Paylaşım görseli `public/og-image.jpg` (1200×630) ana sayfanın açılış karesinden alındı.
+- Kurucu metni (`src/content.js` → `home.about.founder`) yalnız projelerden görünen bilgiyle
+  yazıldı; eğitim, şehir gibi kişisel ayrıntı eklenecekse oraya.
+
+## Dayanıklılık
+- WebGL açılamazsa site 3D'siz açılır (`body.no-webgl`): metinler tam, ürün sayfalarında kapak görseli.
+- "Hareketi azalt" (`prefers-reduced-motion`) açıksa yumuşak kaydırma, film greni ve RGB vuruşu kapanır,
+  3D ortam hareketi yavaşlar.

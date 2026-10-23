@@ -48,13 +48,27 @@ function split(text, cls = 'split') {
     .join('')}</span>`;
 }
 
-const engine = createEngine(document.getElementById('stage'));
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// WebGL açılamazsa (eski cihaz, kapalı donanım hızlandırma) site 3D'siz ama eksiksiz açılır
+function createFallbackEngine() {
+  document.body.classList.add('no-webgl');
+  return { renderer: null, state: { p: 0, sp: 0, target: { p: 0, sp: 0 }, velocity: 0, pulse: 0 }, setScene() {}, current: null };
+}
+let engine;
+try {
+  engine = createEngine(document.getElementById('stage'), { reducedMotion });
+} catch (err) {
+  console.warn('WebGL kullanılamıyor, 3D sahneler kapalı:', err);
+  engine = createFallbackEngine();
+}
 const pageEl = document.getElementById('page');
 const curtain = document.getElementById('curtain');
 const hud = document.getElementById('hud');
 
 // ---------- yumuşak kaydırma ----------
-const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: true });
+// "hareketi azalt" açıksa tarayıcının kendi kaydırması kullanılır
+const lenis = new Lenis({ lerp: 0.085, wheelMultiplier: 0.9, smoothWheel: !reducedMotion });
 let velocity = 0;
 function raf(t) {
   lenis.raf(t);
@@ -89,6 +103,16 @@ function homeHTML() {
       <div class="about-cols">
         ${a.p.map((p) => `<p class="reveal">${T(p)}</p>`).join('')}
       </div>
+      <article class="founder reveal">
+        <div class="f-mark" aria-hidden="true">${studio.founder.split(' ').map((w) => w[0]).join('')}</div>
+        <div class="f-body">
+          <p class="kicker">${T(a.founder.label)}</p>
+          <h3>${esc(studio.founder)}</h3>
+          <p class="f-role">${T(a.founder.role)}</p>
+          ${a.founder.p.map((p) => `<p>${T(p)}</p>`).join('')}
+          <a class="f-mail" href="mailto:${studio.email}">${studio.email} →</a>
+        </div>
+      </article>
       <div class="values">
         ${a.values.map((v, i) => `<div class="value reveal" style="--d:${i}"><span class="vn">${pad(i + 1)}</span><h3>${T(v.h)}</h3><p>${T(v.p)}</p></div>`).join('')}
       </div>
@@ -136,7 +160,7 @@ function homeHTML() {
     <h2 class="display sm">${split(T(home.contact_h))}</h2>
     <p class="lead reveal">${T(home.contact_p)}</p>
     <a class="btn magnetic reveal" href="mailto:${studio.email}">${studio.email}</a>
-    <footer>© ${new Date().getFullYear()} ${studio.name} Studio</footer>
+    <footer>© ${new Date().getFullYear()} ${studio.name} Studio · ${esc(studio.founder)}</footer>
   </section>`;
 }
 
@@ -163,6 +187,7 @@ function productHTML(p) {
   const N = p.sections.length;
   return `
   <section class="sec hero p-hero" data-sec data-label="${esc(pname(p))}">
+    <div class="p-cover" style="background-image:url(${p.cover})" aria-hidden="true"></div>
     <div class="p-hero-in">
       <div class="p-meta"><img class="p-icon" src="${p.icon}" alt="" /><span class="eyebrow">${p.code} · ${T(ui[p.kind])}${p.client ? ' · ' + esc(T(p.client)) : ''}</span></div>
       <h1 class="display mega">${split(pname(p))}</h1>
@@ -430,13 +455,15 @@ async function route(force = false) {
   if (!sameScene && !firstLoad) curtain.classList.add('on');
   document.body.classList.remove('menu-open');
   await new Promise((r) => setTimeout(r, sameScene || firstLoad ? 0 : 520));
-  const mod = sceneStale ? await scenes[scene]() : null;
+  const mod = sceneStale && engine.renderer ? await scenes[scene]().catch((err) => (console.error(err), null)) : null;
   if (my !== routeId) return;
 
   const accent = p ? p.accent : '#9aa7ff';
   document.documentElement.style.setProperty('--accent', accent);
   document.documentElement.style.setProperty('--bg', p ? p.bg : '#05060c');
   document.title = p ? `${pname(p)} — ${studio.name}` : `${studio.name} — ${T(home.eyebrow)}`;
+  // sayfaya özel açıklama: JS çalıştıran tarayıcı/arama motorları her ürünü kendi metniyle görsün
+  document.querySelector('meta[name="description"]')?.setAttribute('content', p ? T(p.tagline) : T(home.lead));
   document.documentElement.lang = lang;
   document.body.dataset.page = key;
   document.body.dataset.kind = p ? p.kind : 'home';
@@ -455,12 +482,14 @@ async function route(force = false) {
   if (sceneStale) {
     const assets = p ? [...(p.shots ?? []), p.icon] : products.map((x) => x.icon);
     await Promise.race([preload(assets, firstLoad ? setLoad : null), new Promise((r) => setTimeout(r, firstLoad ? 6000 : 2500))]);
-    try {
-      const built = mod.build({ renderer: engine.renderer, product: p, products, websites, state: engine.state, lang, navigate: (s) => (location.hash = `#/${s}`) });
-      engine.setScene(built);
-    } catch (err) {
-      // sahne kurulamazsa sayfa yine de açılsın
-      console.error(err);
+    if (mod) {
+      try {
+        const built = mod.build({ renderer: engine.renderer, product: p, products, websites, state: engine.state, lang, navigate: (s) => (location.hash = `#/${s}`) });
+        engine.setScene(built);
+      } catch (err) {
+        // sahne kurulamazsa sayfa yine de açılsın
+        console.error(err);
+      }
     }
     currentKey = key;
     currentLang = lang;

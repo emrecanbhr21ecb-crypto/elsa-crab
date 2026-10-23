@@ -181,6 +181,17 @@ body.scrolled .scroll-cue { opacity: 0; }
 .step { position: relative; padding: 34px 26px 0 0; }
 .step::before { content: ''; position: absolute; top: 0; left: 0; width: 15px; height: 15px; border-radius: 50%; background: var(--bg); border: 1px solid var(--accent); box-shadow: 0 0 0 4px var(--bg); }
 
+/* kurucu */
+.founder { display: grid; grid-template-columns: 120px 1fr; gap: 36px; margin-top: 64px; max-width: 980px; padding: 36px; border: 1px solid var(--line); border-radius: 6px; background: rgba(6, 7, 13, 0.62); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); position: relative; }
+.founder::before { content: ''; position: absolute; left: -1px; top: 28px; bottom: 28px; width: 2px; background: var(--accent); }
+.f-mark { width: 120px; height: 120px; border-radius: 50%; display: grid; place-items: center; font: 300 40px/1 var(--serif); letter-spacing: 0.02em; color: var(--fg); background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--accent) 45%, transparent), rgba(255, 255, 255, 0.04) 70%); border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); }
+.f-body .kicker { margin-bottom: 8px; }
+.f-body h3 { font: 400 clamp(32px, 3.4vw, 46px)/1.05 var(--serif); letter-spacing: -0.02em; margin: 0; }
+.f-role { font: 500 12px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin: 10px 0 20px; }
+.f-body p:not(.kicker):not(.f-role) { color: var(--muted); margin: 0 0 14px; text-wrap: pretty; }
+.f-mail { display: inline-block; margin-top: 6px; font-weight: 600; font-size: 15px; color: var(--accent); text-decoration: none; }
+.f-mail:hover { text-decoration: underline; }
+
 /* istatistik */
 .stats { align-items: center; }
 .stats .kicker { align-self: center; }
@@ -331,11 +342,14 @@ body.loaded #curtain:not(.on) .loader { display: none; }
   .chapter .sticky { align-items: flex-end; padding-bottom: 70px; }
   .chapter.right .sticky { justify-content: stretch; }
   .panel { max-width: none; width: 100%; padding: 24px 20px; background: rgba(8, 10, 18, 0.66); }
+  body[data-tone='light'] .panel { background: rgba(250, 250, 248, 0.82); }
   .about-cols, .steps { grid-template-columns: 1fr; }
   .steps::before { display: none; }
   .step { padding: 0 0 28px 30px; }
   .step::before { top: 4px; }
   .values { grid-template-columns: 1fr; }
+  .founder { grid-template-columns: 1fr; gap: 20px; padding: 24px 20px; margin-top: 44px; }
+  .f-mark { width: 76px; height: 76px; font-size: 26px; }
   .stat-grid, .stat-grid.three { grid-template-columns: 1fr 1fr; }
   .stat-grid.three .stat:last-child { grid-column: 1 / -1; }
   .stat { padding: 22px 18px; }
@@ -343,10 +357,25 @@ body.loaded #curtain:not(.on) .loader { display: none; }
   .spec { grid-template-columns: 1fr; gap: 6px; }
   .hero::before { background: linear-gradient(transparent 20%, rgba(3, 4, 10, 0.62) 70%); }
   .hero { justify-content: flex-end; padding-bottom: 130px; }
+  /* ürün hero'su: üst ~%40 3D sahneye, metin altına — nesneler başlığın üstüne binmesin */
+  .p-hero { justify-content: flex-start; padding-top: 40vh; padding-bottom: 72px; }
+  .p-hero::before { background: linear-gradient(transparent 28vh, rgba(3, 4, 10, 0.74) 46vh); }
+  body[data-tone='light'] .p-hero::before { background: linear-gradient(transparent 28vh, rgba(250, 250, 248, 0.8) 46vh); }
+  .p-hero .scroll-cue { display: none; }
+  .scroll-cue { left: 16px; transform: none; align-items: flex-start; }
   .hg-track { gap: 18px; }
   .hgallery { min-height: calc(100vh + var(--n) * 45vh); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .mq-track { animation: none; }
+}
+
+/* ---------- WebGL yoksa: 3D yerine durağan zemin ---------- */
+body.no-webgl #stage { display: none; }
+body.no-webgl { background: radial-gradient(70% 55% at 75% 30%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%) fixed, var(--bg); }
+.p-cover { display: none; }
+body.no-webgl .p-cover { display: block; position: absolute; z-index: -2; top: 14%; bottom: 14%; right: clamp(16px, 7vw, 120px); width: min(42vw, 520px); background: center / cover no-repeat; border-radius: 18px; opacity: 0.55; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8); mask-image: linear-gradient(90deg, transparent, #000 35%); -webkit-mask-image: linear-gradient(90deg, transparent, #000 35%); }
+@media (max-width: 820px) {
+  body.no-webgl .p-cover { top: 88px; bottom: auto; left: 16px; right: 16px; width: auto; height: 34vh; mask-image: linear-gradient(#000 50%, transparent); -webkit-mask-image: linear-gradient(#000 50%, transparent); }
 }

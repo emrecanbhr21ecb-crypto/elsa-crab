@@ -126,6 +126,8 @@ export function build({ renderer, products, websites = [], navigate }) {
     scene,
     camera,
     bloom: { strength: 0.5, radius: 0.55, threshold: 0.74 },
+    // ana sayfa kendi mobil kompozisyonunu kuruyor (küre üstte), ek kaydırma gerekmez
+    mobileShift: 0,
     update(t, dt, s) {
       const k = keyframe(K(s.mobile), s.sp);
       orbU.time.value = t;
